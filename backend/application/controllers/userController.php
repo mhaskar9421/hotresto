@@ -28,6 +28,7 @@ class userController extends CI_Controller{
     
     public function loginUser()
     {
+        $userdata = [];
         $data =  json_decode(file_get_contents('php://input'), TRUE);
         $username = $data['username'];
         $password = $data["password"];
