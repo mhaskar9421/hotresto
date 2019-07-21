@@ -10,7 +10,7 @@ class userModel extends CI_Model{
         $query = $this->db->get('hr_login');
 
         if($query->num_rows() == 1) {
-            return true;
+            return $query->row();
         }
 
         return false;
