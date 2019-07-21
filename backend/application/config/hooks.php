@@ -17,3 +17,4 @@ $hook['pre_controller'] = array(
     'filename' => 'CORS.php',  
     'filepath' => 'hooks'
     );  
+?>
