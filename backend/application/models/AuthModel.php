@@ -5,8 +5,8 @@ class AuthModel extends CI_Model{
     
      function getUserData($username, $password)
     {
-        $this->db->where('username', $username);
-        $this->db->where('password', $password);
+        $this->db->where('login_username', $username);
+        $this->db->where('login_password', $password);
         $query = $this->db->get('hr_login');
 
         if($query->num_rows() == 1) {

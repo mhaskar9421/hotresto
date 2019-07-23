@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . '/libraries/encodeDecodeToken.php';
 
-class userController extends CI_Controller{
+class RoomController extends CI_Controller{
 
     public function __construct($config = 'rest')
     {
@@ -26,7 +26,7 @@ class userController extends CI_Controller{
 		}
         parent::__construct();
         $this->load->helper('form');
-        $this->load->model('userModel');
+        $this->load->model('RoomModel');
         $this->load->helper('url');
     }
 }

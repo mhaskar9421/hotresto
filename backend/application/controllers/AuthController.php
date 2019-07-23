@@ -36,9 +36,9 @@ class AuthController extends CI_Controller{
         $password = $data["password"];
         $user = $this->AuthModel->getUserData($username, $password);
         if($user){
-            $tokenData['uniqueId'] = $user->id;
+            $tokenData['uniqueId'] = $user->login_id;
             $tokenData['status'] = true;
-            $tokenData['name'] = $user->username;
+            $tokenData['name'] = $user->login_username;
             $tokenData['timeStamp'] = Date('Y-m-d h:i:s');
             $jwtToken = $this->objOfJwt->GenerateToken($tokenData);
             echo json_encode(array('Token'=>$jwtToken));
