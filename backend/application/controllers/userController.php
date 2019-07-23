@@ -29,11 +29,5 @@ class userController extends CI_Controller{
         $this->load->model('userModel');
         $this->load->helper('url');
     }
-
-    public function logout()
-    { 
-        echo json_encode("Success!");
-    }
-
 }
 ?>

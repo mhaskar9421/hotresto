@@ -46,5 +46,10 @@ class AuthUser extends CI_Controller{
             echo json_encode(array('Token'=>$jwtToken));
         }
     }
+
+    public function logout()
+    { 
+        echo json_encode("Success!");
+    }
 }
 ?>
