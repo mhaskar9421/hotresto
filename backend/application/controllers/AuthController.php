@@ -42,6 +42,8 @@ class AuthController extends CI_Controller{
             $tokenData['timeStamp'] = Date('Y-m-d h:i:s');
             $jwtToken = $this->objOfJwt->GenerateToken($tokenData);
             echo json_encode(array('Token'=>$jwtToken));
+        } else {
+            echo json_encode(false);
         }
     }
 
