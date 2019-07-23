@@ -2,7 +2,6 @@
 
 class Authentication extends CI_Controller
 {
-       
     public function __construct($config = 'rest')
     {
         parent::__construct();
@@ -15,7 +14,7 @@ class Authentication extends CI_Controller
     public function checkValidAccess($params)
     {   
         $RTR =& load_class('Router');
-        if ($RTR->class != "AuthUser"){
+        if ($RTR->class != "AuthController"){
             $received_Token = $this->input->request_headers('Authorization');
             try {
             $jwtData = $this->objOfJwt->DecodeToken(@$received_Token['Token']);

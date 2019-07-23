@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class userModel extends CI_Model{
+class AuthModel extends CI_Model{
     
-     function login($username, $password)
+     function getUserData($username, $password)
     {
         $this->db->where('username', $username);
         $this->db->where('password', $password);
