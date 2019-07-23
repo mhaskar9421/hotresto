@@ -11,10 +11,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/hooks.html
 |
 */
-// $hook['pre_controller'] = array(  
-//     'class' => 'CORSPolicyController',  
-//     'function' => 'AllowOrigin',  
-//     'filename' => 'CORS.php',  
-//     'filepath' => 'hooks'
-//     );  
-?>
+$hook['pre_controller'] = array(  
+    'class' => 'Authentication',  
+    'function' => 'checkValidAccess',  
+    'filename' => 'Authentication.php',  
+    'filepath' => 'hooks'
+    );  
