@@ -6,11 +6,11 @@ require APPPATH . '/libraries/encodeDecodeToken.php';
 class RoomController extends CI_Controller{
 
     public function __construct($config = 'rest')
-    {
-        if (isset($_SERVER['HTTP_ORIGIN'])){
-			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-			header('Access-Control-Allow-Credentials: true');
-			header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    {  
+		if (isset($_SERVER['HTTP_ORIGIN'])){
+		header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+		header('Access-Control-Allow-Credentials: true');
+		header('Access-Control-Max-Age: 86400');    // cache for 1 day
 		}
 		// Access-Control headers are received during OPTIONS requests
 		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
@@ -28,14 +28,14 @@ class RoomController extends CI_Controller{
 	}
 	
 	public function addRoom() {
-		//$roomdata =  json_decode(file_get_contents('php://input'), TRUE);
-		$roomdata = array(
-			'roomname' => 'side_left',
-			'roomnumber' => '1',
-			'noofbeds' => '2',
+		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
+		$data = array(
+			'roomname' => $roomdata['roomname'],
+			'roomnumber' => $roomdata['roomnumber'],
+			'noofbeds' => $roomdata['noofbeds'],
 			'roomimage' => 'image'
 		);
-		$response = $this->RoomModel->AddRoom($roomdata);
+		$response = $this->RoomModel->AddRoom($data);
 		if($response){
 			echo json_encode(true);
 		} else {
