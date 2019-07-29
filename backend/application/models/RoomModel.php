@@ -18,5 +18,15 @@ class RoomModel extends CI_Model{
                 return false; 
             }     
         }
+
+        function ViewRoom() 
+        {
+            $query = $this->db->get('hr_rooms');
+            if($query->result()) {
+                return $query->result();
+            } else {
+                return false; 
+            }   
+        }
 }
 ?>

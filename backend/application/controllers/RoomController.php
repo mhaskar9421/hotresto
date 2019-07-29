@@ -42,5 +42,14 @@ class RoomController extends CI_Controller{
 			echo json_encode(false);
 		}
 	}
+
+	public function viewRoom() {
+		$response = $this->RoomModel->ViewRoom();
+		if($response){
+			echo json_encode($response);
+		} else {
+			echo json_encode(false);
+		}
+	}
 }
 ?>
