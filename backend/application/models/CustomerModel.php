@@ -20,9 +20,9 @@ class CustomerModel extends CI_Model{
             }     
         }
 
-        function ViewRoom() 
+        function ViewCustomer() 
         {
-            $query = $this->db->get('hr_rooms');
+            $query = $this->db->get('hr_customers');
             if($query->result()) {
                 return $query->result();
             } else {
