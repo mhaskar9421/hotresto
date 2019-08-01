@@ -29,5 +29,16 @@ class CustomerModel extends CI_Model{
                 return false; 
             }   
         }
+
+        function deleteCustomer($id) 
+        {
+            $this->db->where('customer_id', $id);
+            $query = $this->db->delete('hr_customers'); 
+            if($query) {
+                return true;
+            } else {
+                return false; 
+            }   
+        }
 }
 ?>

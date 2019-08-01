@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . '/libraries/encodeDecodeToken.php';
 
-class RoomController extends CI_Controller{
+class TaxController extends CI_Controller{
 
     public function __construct($config = 'rest')
     {  
@@ -23,19 +23,13 @@ class RoomController extends CI_Controller{
 		}
         parent::__construct();
         $this->load->helper('form');
-        $this->load->model('RoomModel');
+        $this->load->model('TaxModel');
         $this->load->helper('url');
 	}
 	
-	public function addRoom() {
-		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
-		$data = array(
-			'roomname' => $roomdata['roomname'],
-			'roomnumber' => $roomdata['roomnumber'],
-			'noofbeds' => $roomdata['noofbeds'],
-			'roomimage' => 'image'
-		);
-		$response = $this->RoomModel->AddRoom($data);
+	public function addTax() {
+		$tax = json_decode(file_get_contents('php://input'), TRUE);
+		$response = $this->TaxModel->AddTax($tax);
 		if($response){
 			echo json_encode(true);
 		} else {
@@ -43,8 +37,8 @@ class RoomController extends CI_Controller{
 		}
 	}
 
-	public function viewRoom() {
-		$response = $this->RoomModel->ViewRoom();
+	public function viewTax() {
+		$response = $this->TaxModel->ViewTax();
 		if($response){
 			echo json_encode($response);
 		} else {
@@ -52,14 +46,13 @@ class RoomController extends CI_Controller{
 		}
 	}
 
-	public function deleteRoom($id) {
-		$result = $this->RoomModel->DeleteRoom($id);
+	public function deleteTax($id) {
+		$result = $this->TaxModel->deleteTax($id);
 		if($result){
 			echo json_encode(true);
 		} else {
 			echo json_encode(false);
 		}
 	}
-
 }
 ?>

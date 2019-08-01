@@ -52,5 +52,14 @@ class CustomerController extends CI_Controller{
 			echo json_encode(false);
 		}
 	}
+
+	public function deleteCustomer($id) {
+		$result = $this->CustomerModel->deleteCustomer($id);
+		if($result){
+			echo json_encode(true);
+		} else {
+			echo json_encode(false);
+		}
+	}
 }
 ?>

@@ -1,17 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class RoomModel extends CI_Model{
+class TaxModel extends CI_Model{
     
-     function AddRoom($roomdata)
+     function AddTax($Taxdata)
         {
             $data = array(
-                'room_name' => $roomdata['roomname'],
-                'room_number' => $roomdata["roomnumber"],
-                'room_bed_count' => $roomdata['noofbeds'],
-                'room_image' => $roomdata["roomimage"]
+                'tax_amount' => $Taxdata['taxAmount'],
+                'tax_type' => $Taxdata['taxType']
             );
-            $query = $this->db->insert('hr_rooms', $data);
+            $query = $this->db->insert('hr_tax', $data);
             if($query) {
                 return true;
             } else {
@@ -19,9 +17,9 @@ class RoomModel extends CI_Model{
             }     
         }
 
-        function ViewRoom() 
+        function ViewTax() 
         {
-            $query = $this->db->get('hr_rooms');
+            $query = $this->db->get('hr_tax');
             if($query->result()) {
                 return $query->result();
             } else {
@@ -29,10 +27,10 @@ class RoomModel extends CI_Model{
             }   
         }
 
-        function DeleteRoom($id) 
+        function DeleteTax($id) 
         {
-            $this->db->where('room_id', $id);
-            $query = $this->db->delete('hr_rooms'); 
+            $this->db->where('Tax_id', $id);
+            $query = $this->db->delete('hr_tax'); 
             if($query) {
                 return true;
             } else {
