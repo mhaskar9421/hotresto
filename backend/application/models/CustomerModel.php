@@ -40,5 +40,17 @@ class CustomerModel extends CI_Model{
                 return false; 
             }   
         }
+
+        function totalCustomers() 
+        {
+            $this->db->select('*');
+            $this->db->from('hr_customers');
+            $query = $this->db->count_all_results(); 
+            if($query) {
+                return $query;
+            } else {
+                return false; 
+            }   
+        }
 }
 ?>

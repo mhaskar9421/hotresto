@@ -1118,9 +1118,6 @@ input[type="checkbox"] {
 }
 
 @media (min-width: 768px) {
-  .navbar {
-    height: 60px;
-  }
 
   .navbar .navbar-nav>li>a {
     padding-top: 20px;
@@ -1303,7 +1300,6 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 768px) {
-
   .mainbar .dropdown-menu>li>a:hover,
   .mainbar .dropdown-menu>li>a:focus {
     color: #fff;
