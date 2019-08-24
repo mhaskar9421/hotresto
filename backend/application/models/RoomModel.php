@@ -21,8 +21,7 @@ class RoomModel extends CI_Model{
 
         function ViewRoom() 
         {
-            $query = $this->db->select('*')->from('hr_rooms');
-            //$this->db->get('hr_rooms');
+            $query = $this->db->get('hr_rooms');
             if($query->result()) {
                 return $query->result();
             } else {
