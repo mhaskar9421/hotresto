@@ -64,5 +64,40 @@ class RoomController extends CI_Controller{
 		}
 	}
 
+	public function getAvaliableRooms() {
+		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
+		$getCheckinDate = $roomdata['checkinDate'];
+		$getCheckoutDate = $roomdata['checkoutDate'];
+		$formattedCheckinDate = date("Y-m-d", strtotime($getCheckinDate));
+		$formattedCheckoutDate = date("Y-m-d", strtotime($getCheckoutDate));
+		$response = $this->RoomModel->getAvaliableRoomsList($formattedCheckinDate, $formattedCheckoutDate);
+		if($response){
+			echo json_encode($response);
+		} else {
+			echo json_encode(false);
+		}
+	}
+
+	public function BookRoom() {
+		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
+		$bookform = $roomdata['bookroomform'];
+		$customerInfo = $bookform['customerInfo'];
+		$roomInfo = $bookform['roomInfo'];
+		$paymentInfo = $bookform['paymentInfo'];
+		$data = array(
+			'Name' => $customerInfo['name'],
+			'IDType' => $customerInfo['idtype'],
+			'IDNumber' => $customerInfo['idnumber'],
+			'Address' => $customerInfo['address'],
+			'uploadid' => $customerInfo['uploadid']
+		);
+		// $response = $this->RoomModel->AddRoom($data);
+		if($customerData){
+			echo json_encode($bookform);
+		} else {
+			echo json_encode(false);
+		}
+	}
+
 }
 ?>
