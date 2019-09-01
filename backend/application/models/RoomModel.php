@@ -55,8 +55,12 @@ class RoomModel extends CI_Model{
                 $avaliable_rooms = "SELECT * FROM `hr_rooms` WHERE `room_id` NOT IN(".$room_id.")";
                 $result = $this->db->query($avaliable_rooms);
                 $query2_result = $result->result();  
-                return $query2_result;
-            }            
+            } else {
+                $avaliable_rooms = "SELECT * FROM `hr_rooms` WHERE 1";
+                $result = $this->db->query($avaliable_rooms);
+                $query2_result = $result->result();  
+            }        
+            return $query2_result;    
         }
 
         function BookRoom($bookroomform)

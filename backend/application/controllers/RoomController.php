@@ -68,6 +68,7 @@ class RoomController extends CI_Controller{
 		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
 		$getCheckinDate = $roomdata['checkinDate'];
 		$getCheckoutDate = $roomdata['checkoutDate'];
+		date_default_timezone_set('Asia/Kolkata');
 		$formattedCheckinDate = date("Y-m-d", strtotime($getCheckinDate));
 		$formattedCheckoutDate = date("Y-m-d", strtotime($getCheckoutDate));
 		$response = $this->RoomModel->getAvaliableRoomsList($formattedCheckinDate, $formattedCheckoutDate);
