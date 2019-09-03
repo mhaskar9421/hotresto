@@ -63,19 +63,18 @@ class RoomModel extends CI_Model{
             return $query2_result;    
         }
 
-        function BookRoom($bookroomform)
+        function BookRoom($bookingformdata, $customerdata)
         {
-            // $data = array(
-            //     'room_name' => $bookroomform['roomname'],
-            //     'room_number' => $bookroomform["roomnumber"],
-            //     'room_bed_count' => $bookroomform['noofbeds']
-            // );
-            //$query = $this->db->insert('hr_rooms', $data);
-            // if($bookroomform) {
-            //     return $bookroomform;
-            // } else {
-            //     return false; 
-            // }     
+            if(!empty($customerdata)) { 
+                $this->db->insert('hr_customers', $customerdata);
+                $customer_id = $this->db->insert_id(); 
+            }   
+            $this->db->insert('hr_bookings', $bookingformdata);
+            $booking_id = $this->db->insert_id(); 
+            $data = array('customer_id'=> $booking_id);
+            $this->db->set('customer_id','customer_id',false);
+            $this->db->where('customer_id',$booking_id);
+            $this->db->update('hr_bookings',$data);
         }
 }
 ?>

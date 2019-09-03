@@ -49,10 +49,5 @@ class AuthController extends CI_Controller{
             echo json_encode(false);
         }
     }
-
-    public function logout()
-    { 
-        echo json_encode("Success!");
-    }
 }
 ?>
