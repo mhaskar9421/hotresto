@@ -99,23 +99,37 @@ class RoomController extends CI_Controller{
 				'customer_address' => $bookingInfo['address']
 			); 
 		} 
-		$bookingformdata = array(
-			'customer_id' => $bookingInfo['customerId'],
-			'room_id' => $bookingInfo['room_id'],
-			'checkin_date' => $CheckinDate,
-			'checkout_date' => $CheckoutDate,
-			'room_charges' => $bookingInfo['roomamount'],
-			'extra_occupancy' => $bookingInfo['extraoccupancy'],			
-			'food_bill_number' => $paymentInfo['billamount'],
-			'paid_amount' => $paymentInfo['paidamount'],
-			'payment_status' => $paymentInfo['paymentstatus'],
-			'payment_mode' => $paymentInfo['paymenttype'],
-			'total_amount' => $paymentInfo['totalamount']
-		); 
+		    date_default_timezone_set('Asia/Kolkata');
+            $start_date = date('Y-m-d', strtotime($CheckinDate));
+            $end_date =  date('Y-m-d', strtotime($CheckoutDate));
+            $day = 86400; // Day in seconds  
+            $format = 'Y-m-d'; // Output format (see PHP date funciton)  
+            $sTime = strtotime($start_date); // Start as time  
+            $eTime = strtotime($end_date); // End as time  
+            $numDays = round(($eTime - $sTime) / $day) + 1;  
+            $days = array();  
+            for ($d = 0; $d < $numDays; $d++) {  
+                $days[] = date($format, ($sTime + ($d * $day)));  
+            }
+            $allDays = implode(",",$days);
+			$bookingformdata = array(
+				'customer_id' => $bookingInfo['customerId'],
+				'room_id' => $bookingInfo['room_id'],
+				'checkin_date' => $CheckinDate,
+				'checkout_date' => $CheckoutDate,
+				'booked_dates' => $allDays,
+				'room_charges' => $bookingInfo['roomamount'],
+				'extra_occupancy' => $bookingInfo['extraoccupancy'],			
+				'food_bill_number' => $paymentInfo['billamount'],
+				'paid_amount' => $paymentInfo['paidamount'],
+				'payment_status' => $paymentInfo['paymentstatus'],
+				'payment_mode' => $paymentInfo['paymenttype'],
+				'total_amount' => $paymentInfo['totalamount']
+			); 
 		
 		$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);
-		if($response){
-			echo json_encode($response);
+		if($bookingformdata){
+			echo json_encode($bookingformdata);
 		} else {
 			echo json_encode(false);
 		}

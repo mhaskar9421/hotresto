@@ -30,6 +30,16 @@ class CustomerModel extends CI_Model{
             }   
         }
 
+        function viewBookedCustomers() 
+        {
+            $query = $this->db->get('hr_bookings');
+            if($query->result()) {
+                return $query->result();
+            } else {
+                return false; 
+            }   
+        }
+
         function deleteCustomer($id) 
         {
             $this->db->where('customer_id', $id);

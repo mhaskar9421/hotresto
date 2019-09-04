@@ -56,6 +56,15 @@ class CustomerController extends CI_Controller{
 		}
 	}
 
+	public function viewBookedCustomers() {
+		$response = $this->CustomerModel->viewBookedCustomers();
+		if($response){
+			echo json_encode($response);
+		} else {
+			echo json_encode(false);
+		}
+	}
+
 	public function deleteCustomer($id) {
 		$result = $this->CustomerModel->deleteCustomer($id);
 		if($result){

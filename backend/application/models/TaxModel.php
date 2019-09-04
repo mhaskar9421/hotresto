@@ -29,7 +29,7 @@ class TaxModel extends CI_Model{
 
         function DeleteTax($id) 
         {
-            $this->db->where('Tax_id', $id);
+            $this->db->where('tax_id', $id);
             $query = $this->db->delete('hr_tax'); 
             if($query) {
                 return true;

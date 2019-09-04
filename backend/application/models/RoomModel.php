@@ -60,7 +60,8 @@ class RoomModel extends CI_Model{
                 $result = $this->db->query($avaliable_rooms);
                 $query2_result = $result->result();  
             }        
-            return $query2_result;    
+            return $query2_result;
+                    
         }
 
         function BookRoom($bookingformdata, $customerdata)
@@ -75,6 +76,25 @@ class RoomModel extends CI_Model{
             $this->db->set('customer_id','customer_id',false);
             $this->db->where('customer_id',$booking_id);
             $this->db->update('hr_bookings',$data);
+            return $bookingformdata;
+
+            // date_default_timezone_set('Asia/Kolkata');
+            // $start_date = date('Y-m-d', strtotime($checkindate));
+            // $end_date =  date('Y-m-d', strtotime($checkoutdate));
+            // $day = 86400; // Day in seconds  
+            // $format = 'Y-m-d'; // Output format (see PHP date funciton)  
+            // $sTime = strtotime($start_date); // Start as time  
+            // $eTime = strtotime($end_date); // End as time  
+            // $numDays = round(($eTime - $sTime) / $day) + 1;  
+            // $days = array();  
+            // for ($d = 0; $d < $numDays; $d++) {  
+            //     $days[] = date($format, ($sTime + ($d * $day)));  
+            // }
+            // $allDays = implode(",",$days);
+            // $daysInfo = array('booked_dates'=> $allDays);
+            // $this->db->set('booked_dates','booked_dates',false);
+            // $this->db->where('booked_id',$booking_id);
+            // $this->db->update('hr_booked_rooms',$daysInfo);
         }
 }
 ?>
