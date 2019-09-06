@@ -71,7 +71,16 @@ class RoomController extends CI_Controller{
 		date_default_timezone_set('Asia/Kolkata');
 		$formattedCheckinDate = date("Y-m-d", strtotime($getCheckinDate));
 		$formattedCheckoutDate = date("Y-m-d", strtotime($getCheckoutDate));
-		$response = $this->RoomModel->getAvaliableRoomsList($formattedCheckinDate, $formattedCheckoutDate);
+		$day = 86400; // Day in seconds  
+		$format = 'Y-m-d'; // Output format (see PHP date funciton)  
+		$sTime = strtotime($formattedCheckinDate); // Start as time  
+		$eTime = strtotime($formattedCheckoutDate); // End as time  
+		$numDays = round(($eTime - $sTime) / $day) + 1;  
+		$searchAvaliableDays = array();  
+		for ($d = 0; $d < $numDays; $d++) {  
+			$searchAvaliableDays[] = date($format, ($sTime + ($d * $day)));  
+		}
+		$response = $this->RoomModel->getAvaliableRoomsList($searchAvaliableDays);
 		if($response){
 			echo json_encode($response);
 		} else {
@@ -127,12 +136,12 @@ class RoomController extends CI_Controller{
 				'total_amount' => $paymentInfo['totalamount']
 			); 
 		
-		$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);
-		if($bookingformdata){
-			echo json_encode($bookingformdata);
-		} else {
-			echo json_encode(false);
-		}
+			$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);
+			if($bookingformdata){
+				echo json_encode($bookingformdata);
+			} else {
+				echo json_encode(false);
+			}
 	}
 
 }

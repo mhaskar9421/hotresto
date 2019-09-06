@@ -41,28 +41,37 @@ class RoomModel extends CI_Model{
         }
 
         
-        function getAvaliableRoomsList($checkindate, $checkoutdate)
-        { 
-            $sql="SELECT DISTINCT `booked_room_id` FROM `hr_booked_rooms` WHERE ((`room_checkin_date` BETWEEN '".$checkindate."' AND '".$checkoutdate."') OR (`room_checkout_date` BETWEEN '".$checkindate."' AND '".$checkoutdate."'))";
-            $result = $this->db->query($sql);
-            $query1_result = $result->result();
-            $getIds = array();
-            foreach ($query1_result as $row) {
-                $getIds[] =  $row->booked_room_id;           
+        function getAvaliableRoomsList($searchAvaliableDays)
+          { 
+            $query1 = $this->db->get('hr_booked_rooms');
+            if($query1->result()) {
+                $data =  $query1->result();
+                $getIds = array();
+                foreach ($data as $row) {
+                    $getDatesBooked =  explode(" ",$row->booked_dates);
+                    $modified = str_replace(',','',$getDatesBooked);
+                    $array1 = str_split($modified[0], 10);
+                    $array2 = $searchAvaliableDays;
+                    $result = array_intersect($array1, $array2);                     
+                        if($result) {
+                        $getIds[] = $row->booked_room_id;
+                        }           
+                    }
+                    if($getIds) {
+                        $this->db->select("*");
+                        $this->db->from('hr_rooms');
+                        $this->db->where_not_in('room_id', $getIds);
+                        $query2 = $this->db->get();
+                        return $query2->result();
+                    } else {
+                        $query3 = $this->db->get('hr_rooms');
+                        return $query3->result();
+                    }            
+                    } else {
+                        $query4 = $this->db->get('hr_rooms');
+                        return $query4->result(); 
+                    }                    
             }
-            $room_id = implode(",",$getIds);
-            if(!empty($room_id)) {
-                $avaliable_rooms = "SELECT * FROM `hr_rooms` WHERE `room_id` NOT IN(".$room_id.")";
-                $result = $this->db->query($avaliable_rooms);
-                $query2_result = $result->result();  
-            } else {
-                $avaliable_rooms = "SELECT * FROM `hr_rooms` WHERE 1";
-                $result = $this->db->query($avaliable_rooms);
-                $query2_result = $result->result();  
-            }        
-            return $query2_result;
-                    
-        }
 
         function BookRoom($bookingformdata, $customerdata)
         {
@@ -77,24 +86,6 @@ class RoomModel extends CI_Model{
             $this->db->where('customer_id',$booking_id);
             $this->db->update('hr_bookings',$data);
             return $bookingformdata;
-
-            // date_default_timezone_set('Asia/Kolkata');
-            // $start_date = date('Y-m-d', strtotime($checkindate));
-            // $end_date =  date('Y-m-d', strtotime($checkoutdate));
-            // $day = 86400; // Day in seconds  
-            // $format = 'Y-m-d'; // Output format (see PHP date funciton)  
-            // $sTime = strtotime($start_date); // Start as time  
-            // $eTime = strtotime($end_date); // End as time  
-            // $numDays = round(($eTime - $sTime) / $day) + 1;  
-            // $days = array();  
-            // for ($d = 0; $d < $numDays; $d++) {  
-            //     $days[] = date($format, ($sTime + ($d * $day)));  
-            // }
-            // $allDays = implode(",",$days);
-            // $daysInfo = array('booked_dates'=> $allDays);
-            // $this->db->set('booked_dates','booked_dates',false);
-            // $this->db->where('booked_id',$booking_id);
-            // $this->db->update('hr_booked_rooms',$daysInfo);
         }
 }
 ?>
