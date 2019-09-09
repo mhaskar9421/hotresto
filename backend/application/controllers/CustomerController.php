@@ -97,6 +97,7 @@ class CustomerController extends CI_Controller{
 				$data->GST = null;
 			}
 			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
+			$data->booking_id = sprintf("%03s", $data->booking_id);
 		}
 		if($response){
 			echo json_encode($response);
