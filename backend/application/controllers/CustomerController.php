@@ -27,7 +27,30 @@ class CustomerController extends CI_Controller{
         parent::__construct();
         $this->load->helper('form');
         $this->load->model('CustomerModel');
-        $this->load->helper('url');
+		$this->load->helper('url');
+		$this->load->library('upload');
+	}     
+	
+	public function storeImage() {
+		$customerdata = json_decode(file_get_contents('php://input'), TRUE);
+		$files = $_FILES;
+		$cpt = count($_FILES['afuConfig']['name']);
+		for($i=0; $i<$cpt; $i++)
+		{           
+			$_FILES['afuConfig']['name']= $files['afuConfig']['name'][$i];
+			$_FILES['afuConfig']['type']= $files['afuConfig']['type'][$i];
+			$_FILES['afuConfig']['tmp_name']= $files['afuConfig']['tmp_name'][$i];
+			$_FILES['afuConfig']['error']= $files['afuConfig']['error'][$i];
+			$_FILES['afuConfig']['size']= $files['afuConfig']['size'][$i];    
+		}
+        $this->upload->initialize($this->set_upload_options());
+		$data = $this->upload->do_upload();
+		
+		if($data){
+			echo json_encode($data);
+		} else {
+			echo json_encode(false);
+		}
 	}
 	
 	public function addCustomer() {
@@ -37,11 +60,11 @@ class CustomerController extends CI_Controller{
 			'custid' => $customerdata['custid'],
 			'idnumber' => $customerdata['idnumber'],
             'phonenumber' => $customerdata['phonenumber'],
-            'address' => $customerdata['address']            
+			'address' => $customerdata['address']            
         );
 		$response = $this->CustomerModel->AddCustomer($data);
-		if($response){
-			echo json_encode(true);
+		if($customerdata){
+			echo json_encode($file);
 		} else {
 			echo json_encode(false);
 		}

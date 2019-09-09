@@ -87,5 +87,13 @@ class RoomModel extends CI_Model{
             $this->db->update('hr_bookings',$data);
             return $bookingformdata;
         }
+
+        function updateBookingInfo($data) {
+            $this->db->where('booking_id', $data['updatedform']['booking_id']); 
+            $dbdata = array(
+                 "paid_amount" => $data['updateFormData']['totalamount']
+            ); 
+            return $this->db->update('hr_bookings', $dbdata);
+        }
 }
 ?>

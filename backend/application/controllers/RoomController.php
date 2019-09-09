@@ -64,6 +64,16 @@ class RoomController extends CI_Controller{
 		}
 	}
 
+	public function updateBookingInfo() {
+		$updatedInfo = json_decode(file_get_contents('php://input'), TRUE);
+		$response = $this->RoomModel->updateBookingInfo($updatedInfo);
+		if($response){
+			echo json_encode($response);
+		} else {
+			echo json_encode(false);
+		}
+	}
+
 	public function getAvaliableRooms() {
 		$roomdata = json_decode(file_get_contents('php://input'), TRUE);
 		$getCheckinDate = $roomdata['checkinDate'];
