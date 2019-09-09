@@ -41,6 +41,15 @@ class CustomerModel extends CI_Model{
             }   
         }
 
+        function getGSTValue() {
+            $query = $this->db->get('hr_tax');
+            if($query->result()) {
+                return $query->result();
+            } else {
+                return false; 
+            }  
+        }
+
         function deleteCustomer($id) 
         {
             $this->db->where('customer_id', $id);

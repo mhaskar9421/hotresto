@@ -139,11 +139,13 @@ class RoomController extends CI_Controller{
 				'booked_dates' => $allDays,
 				'room_charges' => $bookingInfo['roomamount'],
 				'extra_occupancy' => $bookingInfo['extraoccupancy'],			
-				'food_bill_number' => $paymentInfo['billamount'],
+				'food_bill_amount' => $bookingInfo['foodbillamount'],
+				'food_bill_number' => $bookingInfo['foodbillnumber'],
 				'paid_amount' => $paymentInfo['paidamount'],
 				'payment_status' => $paymentInfo['paymentstatus'],
 				'payment_mode' => $paymentInfo['paymenttype'],
-				'total_amount' => $paymentInfo['totalamount']
+				'total_amount' => $paymentInfo['totalamount'],
+				'booking_date' => date('Y-m-d')
 			); 
 		
 			$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);

@@ -81,6 +81,23 @@ class CustomerController extends CI_Controller{
 
 	public function viewBookedCustomers() {
 		$response = $this->CustomerModel->viewBookedCustomers();
+		$GST = $this->CustomerModel->getGSTValue();
+		foreach ($GST as $data) { 
+             $GSTValues[] = $data->tax_amount; 
+		}
+		$totalGST = array_sum($GSTValues);
+		foreach ($response as $data) {
+			$totalRoomCharges = $data->room_charges + $data->extra_occupancy;
+			if($totalRoomCharges > 999){
+				$totalRoomCharges = $totalRoomCharges + ($totalRoomCharges * $totalGST / 100);
+				$data->totalRoomCharges = $totalRoomCharges;
+				$data->GST = $totalGST; 
+			} else {
+				$data->totalRoomCharges = $totalRoomCharges;
+				$data->GST = null;
+			}
+			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
+		}
 		if($response){
 			echo json_encode($response);
 		} else {
