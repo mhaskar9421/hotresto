@@ -63,8 +63,8 @@ class CustomerController extends CI_Controller{
 			'address' => $customerdata['address']            
         );
 		$response = $this->CustomerModel->AddCustomer($data);
-		if($customerdata){
-			echo json_encode($file);
+		if($response){
+			echo json_encode($response);
 		} else {
 			echo json_encode(false);
 		}
@@ -98,9 +98,14 @@ class CustomerController extends CI_Controller{
 				$data->GST = 0;
 				$data->totalGSTAmount = 0;
 			}
-			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
+			if($data->food_bill_amount) {
+				$foodBillAmt = $data->food_bill_amount;
+				  } else {
+				   $foodBillAmt = 0;
+				}
+			$data->grandTotal = $totalRoomCharges + $foodBillAmt;
 			$data->booking_id = sprintf("%03s", $data->booking_id);
-		}
+		} 	
 		if($response){
 			echo json_encode($response);
 		} else {

@@ -10,8 +10,7 @@ class CustomerModel extends CI_Model{
                 'customer_idtype' => $customerdata['custid'],
                 'customer_idnumber' => $customerdata['idnumber'],
                 'customer_mobile' => $customerdata['phonenumber'],
-                'customer_address' => $customerdata['address'], 
-                'customer_uploadImage' => $customerdata['uploadImage']
+                'customer_address' => $customerdata['address']
             );
             $query = $this->db->insert('hr_customers', $data);
             if($query) {
