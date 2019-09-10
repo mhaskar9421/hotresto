@@ -98,12 +98,10 @@ class CustomerController extends CI_Controller{
 				$data->GST = 0;
 				$data->totalGSTAmount = 0;
 			}
-			if($data->food_bill_amount) {
-				$foodBillAmt = $data->food_bill_amount;
-				  } else {
-				   $foodBillAmt = 0;
-				}
-			$data->grandTotal = $totalRoomCharges + $foodBillAmt;
+			if(!$data->food_bill_amount) {
+				  $data->food_bill_amount = 0;
+			  }
+			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
 			$data->booking_id = sprintf("%03s", $data->booking_id);
 		} 	
 		if($response){
