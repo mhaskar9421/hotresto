@@ -89,12 +89,14 @@ class CustomerController extends CI_Controller{
 		foreach ($response as $data) {
 			$totalRoomCharges = $data->room_charges + $data->extra_occupancy;
 			if($totalRoomCharges > 999){
+				$data->totalGSTAmount = $totalRoomCharges * $totalGST / 100;
 				$totalRoomCharges = $totalRoomCharges + ($totalRoomCharges * $totalGST / 100);
 				$data->totalRoomCharges = $totalRoomCharges;
 				$data->GST = $totalGST; 
 			} else {
 				$data->totalRoomCharges = $totalRoomCharges;
-				$data->GST = null;
+				$data->GST = 0;
+				$data->totalGSTAmount = 0;
 			}
 			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
 			$data->booking_id = sprintf("%03s", $data->booking_id);
@@ -122,6 +124,14 @@ class CustomerController extends CI_Controller{
 		} else {
 			echo json_encode(false);
 		}
+	}
+
+	public function getRoomCustomerDetails() {
+		$customerdata = json_decode(file_get_contents('php://input'), TRUE);
+		$customerInfo = $this->CustomerModel->getCustomerInfo($customerdata['customer_id']);
+		$roomInfo = $this->CustomerModel->getRoomInfo($customerdata['room_id']);
+		$response = array("customerInfo" => $customerInfo, "roomInfo" => $roomInfo); 
+		echo json_encode($response);
 	}
 }
 ?>

@@ -72,5 +72,29 @@ class CustomerModel extends CI_Model{
                 return false; 
             }   
         }
+
+        function getCustomerInfo($customerId) {
+            $this->db->select('customer_name, customer_mobile, customer_address');
+            $this->db->from('hr_customers');
+            $this->db->where('customer_id', $customerId);
+            $query = $this->db->get(); 
+            if($query->result()) {
+                return $query->result();
+            } else {
+                return false; 
+            }
+        }
+
+        function getRoomInfo($roomId) {
+            $this->db->select('room_name, room_number');
+            $this->db->from('hr_rooms');
+            $this->db->where('room_id', $roomId); 
+            $query = $this->db->get(); 
+            if($query->result()) {
+                return $query->result();
+            } else {
+                return false; 
+            }
+        }
 }
 ?>
