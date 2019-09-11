@@ -82,25 +82,31 @@ class CustomerController extends CI_Controller{
 	public function viewBookedCustomers() {
 		$response = $this->CustomerModel->viewBookedCustomers();
 		$GST = $this->CustomerModel->getGSTValue();
-		foreach ($GST as $data) { 
-             $GSTValues[] = $data->tax_amount; 
-		}
-		$totalGST = array_sum($GSTValues);
+		if($GST != false) {
+			foreach ($GST as $data) { 
+				$GSTValues[] = $data->tax_amount; 
+		   }
+		   $totalGST = array_sum($GSTValues);
+		} else {
+			$totalGST = 0;
+		}		
 		foreach ($response as $data) {
 			$totalRoomCharges = $data->room_charges + $data->extra_occupancy;
 			if($totalRoomCharges > 999){
 				$data->totalGSTAmount = $totalRoomCharges * $totalGST / 100;
-				$totalRoomCharges = $totalRoomCharges + ($totalRoomCharges * $totalGST / 100);
+				$totalRoomCharges = $totalRoomCharges + $data->totalGSTAmount;
 				$data->totalRoomCharges = $totalRoomCharges;
-				$data->GST = $totalGST; 
 			} else {
 				$data->totalRoomCharges = $totalRoomCharges;
-				$data->GST = 0;
 				$data->totalGSTAmount = 0;
 			}
 			if(!$data->food_bill_amount) {
 				  $data->food_bill_amount = 0;
 			  }
+			if(!$data->paid_amount) {
+				$data->paid_amount = 0;
+			}
+			$data->GST = $totalGST; 
 			$data->grandTotal = $totalRoomCharges + $data->food_bill_amount;
 			$data->booking_id = sprintf("%03s", $data->booking_id);
 		} 	
