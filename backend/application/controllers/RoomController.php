@@ -149,8 +149,8 @@ class RoomController extends CI_Controller{
 			); 
 		
 			$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);
-			if($bookingformdata){
-				echo json_encode($bookingformdata);
+			if($response){
+				echo json_encode($response);
 			} else {
 				echo json_encode(false);
 			}
