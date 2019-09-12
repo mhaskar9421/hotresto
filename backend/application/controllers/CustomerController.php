@@ -72,6 +72,16 @@ class CustomerController extends CI_Controller{
 
 	public function viewCustomer() {
 		$response = $this->CustomerModel->ViewCustomer();
+		$GST = $this->CustomerModel->getGSTValue();
+		if($GST != false) {
+			foreach ($GST as $data) { 
+				$GSTValues[] = $data->tax_amount; 
+		   }
+		   $totalGST = array_sum($GSTValues);
+		} else {
+			$totalGST = 0;
+		}
+		$response = array("customerList" => $response, "GST"=> $totalGST);
 		if($response){
 			echo json_encode($response);
 		} else {
