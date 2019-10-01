@@ -136,6 +136,7 @@ class RoomController extends CI_Controller{
 				'room_id' => $bookingInfo['room_id'],
 				'checkin_date' => $CheckinDate,
 				'checkout_date' => $CheckoutDate,
+				'noofdays' => $bookingInfo['noofdays'],
 				'booked_dates' => $allDays,
 				'room_charges' => $bookingInfo['roomamount'],
 				'extra_occupancy' => $bookingInfo['extraoccupancy'],			
@@ -146,12 +147,11 @@ class RoomController extends CI_Controller{
 				'payment_mode' => $paymentInfo['paymenttype'],
 				'total_amount' => $paymentInfo['totalamount'],
 				'booking_date' => date('Y-m-d')
-			); 
-		
+			);
 			$response = $this->RoomModel->BookRoom($bookingformdata, $customerdata);
 			if($response){
 				echo json_encode($response);
-			} else {
+			}else{
 				echo json_encode(false);
 			}
 	}

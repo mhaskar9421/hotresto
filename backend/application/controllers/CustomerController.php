@@ -101,7 +101,8 @@ class CustomerController extends CI_Controller{
 			$totalGST = 0;
 		}		
 		foreach ($response as $data) {
-			$totalRoomCharges = $data->room_charges + $data->extra_occupancy;
+			$totalRoomCharges = ($data->room_charges * $data->noofdays) + $data->extra_occupancy;
+			$data->room_charges = $data->room_charges * $data->noofdays;
 			if($totalRoomCharges > 999){
 				$data->totalGSTAmount = $totalRoomCharges * $totalGST / 100;
 				$totalRoomCharges = $totalRoomCharges + $data->totalGSTAmount;
