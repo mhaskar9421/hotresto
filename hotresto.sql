@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 10, 2019 at 04:31 AM
+-- Generation Time: Oct 01, 2019 at 08:33 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `hr_bookings` (
   `extra_occupancy` int(11) NOT NULL,
   `checkin_date` date NOT NULL,
   `checkout_date` date NOT NULL,
+  `noofdays` int(11) NOT NULL,
   `booked_dates` text NOT NULL,
   `food_bill_number` varchar(255) NOT NULL,
   `food_bill_amount` varchar(255) NOT NULL,
@@ -141,14 +142,14 @@ CREATE TABLE IF NOT EXISTS `hr_tax` (
   `tax_type` varchar(255) NOT NULL,
   `tax_amount` varchar(255) NOT NULL,
   PRIMARY KEY (`tax_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `hr_tax`
 --
 
 INSERT INTO `hr_tax` (`tax_id`, `tax_type`, `tax_amount`) VALUES
-(1, 'State GST', '12');
+(3, 'State', '12');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

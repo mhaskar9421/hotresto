@@ -95,6 +95,7 @@ class RoomModel extends CI_Model{
                  "payment_status" => $data['thirdForm']['paymentstatus'],
                  "total_amount" => $data['thirdForm']['totalamount'],
                  "room_charges" => $data['firstForm']['roomamount'],
+                 "noofdays" => $data['firstForm']['noofdays'],
                  "extra_occupancy" => $data['firstForm']['extraoccupancy'],
                  "food_bill_number" => $data['firstForm']['foodbillnumber'],
                  "food_bill_amount" => $data['firstForm']['foodbillamount']
